@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tracking Resi Pengiriman</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="nav-menu" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="stok.html">Informasi Stok</a>
+            <a href="pemesanan.html">Form Pemesanan</a>
+            <a href="tracking.html" style="color: #a7f3d0;">Tracking Resi</a>
+        </div>
+        <div>
+            <button id="btnDarkMode"
+                style="background-color: #334155; color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold;">🌙
+                Dark Mode</button>
+        </div>
+    </div>
+
+    <div class="container card">
+        <h2>Tracking Pengiriman Pesanan</h2>
+        <form id="trackingForm">
+            <input type="text" id="noResi" placeholder="Masukkan No DO / Resi (Contoh hasil pemesanan)" required>
+            <button type="submit">Lacak Pesanan</button>
+        </form>
+
+        <div id="trackingResult" style="margin-top: 20px; display: none;">
+            <h3>Hasil Pelacakan:</h3>
+            <p><strong>Nama Penerima:</strong> <span id="resNama"></span></p>
+            <p><strong>Status:</strong> <span id="resStatus" style="color: #10b981; font-weight: bold;"></span></p>
+            <p><strong>Ekspedisi:</strong> <span id="resEkspedisi"></span></p>
+            <p><strong>Tanggal Kirim:</strong> <span id="resTanggal"></span></p>
+            <p><strong>Paket Buku:</strong> <span id="resPaket"></span></p>
+            <p><strong>Total Biaya:</strong> <span id="resTotal"></span></p>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div id="progressBar" class="progress-bar">0%</div>
+            </div>
+
+            <h4>Histori Perjalanan:</h4>
+            <ul id="listPerjalanan" style="padding-left: 20px;"></ul>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

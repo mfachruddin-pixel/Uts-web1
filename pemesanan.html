@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Form Pemesanan & Checkout - Toko Buku Online</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="nav-menu" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="stok.html">Informasi Stok</a>
+            <a href="pemesanan.html" style="color: #a7f3d0;">Form Pemesanan</a>
+            <a href="tracking.html">Tracking Resi</a>
+        </div>
+        <div>
+            <button id="btnDarkMode"
+                style="background-color: #334155; color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold;">🌙
+                Dark Mode</button>
+        </div>
+    </div>
+
+    <div class="container card">
+        <h2>Form Pemesanan & Checkout Buku</h2>
+        <p>Silakan lengkapi data pemesanan di bawah ini untuk memproses pesanan dan menerbitkan nomor DO (Delivery
+            Order) pengiriman.</p>
+
+        <form id="formPemesanan"
+            style="background: #f0fdf4; padding: 20px; border-radius: 8px; margin-top: 20px; border: 1px solid #d1fae5;">
+            <h3>Data Pemesan & Pengiriman</h3>
+
+            <label for="namaPemesan" style="font-weight: bold; display: block; margin-top: 10px;">Nama Lengkap:</label>
+            <input type="text" id="namaPemesan" placeholder="Contoh: Siti Marlina" required>
+
+            <label for="alamatKirim" style="font-weight: bold; display: block; margin-top: 10px;">Alamat Pengiriman
+                Lengkap:</label>
+            <input type="text" id="alamatKirim" placeholder="Contoh: Jl. Cikarang Baru No. 12, Bekasi" required>
+
+            <label for="pilihBuku" style="font-weight: bold; display: block; margin-top: 10px;">Pilih Paket
+                Buku:</label>
+            <select id="pilihBuku"
+                style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;"
+                required>
+                <option value="">-- Pilih Buku dari Katalog --</option>
+                <option value="Pemrograman Web Dasar|150000">Pemrograman Web Dasar - Rp 150.000</option>
+                <option value="Algoritma dan Pemrograman C++|175000">Algoritma dan Pemrograman C++ - Rp 175.000</option>
+                <option value="Manajemen Keuangan Modern|160000">Manajemen Keuangan Modern - Rp 160.000</option>
+                <option value="Perkembangan Anak Usia Dini|140000">Perkembangan Anak Usia Dini - Rp 140.000</option>
+            </select>
+
+            <label for="jumlahPesan" style="font-weight: bold; display: block; margin-top: 10px;">Jumlah Pesan:</label>
+            <input type="number" id="jumlahPesan" min="1" value="1" required>
+
+            <label for="ekspedisiPilih" style="font-weight: bold; display: block; margin-top: 10px;">Pilih
+                Ekspedisi:</label>
+            <select id="ekspedisiPilih"
+                style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;"
+                required>
+                <option value="JNE Express">JNE Express</option>
+                <option value="SiCepat Regular">SiCepat Regular</option>
+                <option value="J&T Express">J&T Express</option>
+            </select>
+
+            <button type="submit"
+                style="background-color: #10b981; width: 100%; margin-top: 15px; padding: 14px; font-size: 16px;">Proses
+                Pemesanan & Generate Resi</button>
+        </form>
+
+        <div id="hasilPemesanan"
+            style="margin-top: 30px; display: none; background: #ffffff; padding: 20px; border-radius: 8px; border: 2px dashed #10b981;">
+            <h3 style="color: #059669;">🎉 Pemesanan Berhasil Dibuat!</h3>
+            <p>Nomor DO / Resi Anda: <strong id="outNoResi" style="color: #2563eb; font-size: 18px;"></strong></p>
+            <p>Pesanan atas nama <strong id="outNama"></strong> telah dicatat ke sistem dan otomatis terhubung ke menu
+                <strong>Tracking Resi</strong>.</p>
+            <a href="tracking.html"
+                style="display: inline-block; background-color: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; margin-top: 10px; font-weight: bold;">Cek
+                Status di Tracking Resi</a>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const formPemesanan = document.getElementById('formPemesanan');
+            if (formPemesanan) {
+                formPemesanan.addEventListener('submit', (e) => {
+                    e.preventDefault();
+
+                    const nama = document.getElementById('namaPemesan').value;
+                    const alamat = document.getElementById('alamatKirim').value;
+                    const bukuVal = document.getElementById('pilihBuku').value;
+                    const jumlah = parseInt(document.getElementById('jumlahPesan').value);
+                    const ekspedisi = document.getElementById('ekspedisiPilih').value;
+
+                    if (!bukuVal) {
+                        alert("Silakan pilih buku terlebih dahulu!");
+                        return;
+                    }
+
+                    const [namaBuku, hargaSatuan] = bukuVal.split('|');
+                    const totalHarga = parseInt(hargaSatuan) * jumlah;
+
+                    const randomDO = "2023" + Math.floor(1000 + Math.random() * 9000);
+                    const tanggalHariIni = new Date().toISOString().slice(0, 10);
+
+                    const dataBaru = {
+                        nama: nama,
+                        status: "Diproses / Dikemas",
+                        ekspedisi: ekspedisi,
+                        tanggalKirim: tanggalHariIni,
+                        paket: `${jumlah}x ${namaBuku}`,
+                        total: `Rp ${totalHarga.toLocaleString('id-ID')}`,
+                        perjalanan: [
+                            { waktu: `${new Date().toLocaleTimeString()} - ${tanggalHariIni}`, keterangan: "Pesanan dikonfirmasi dan pembayaran diverifikasi." },
+                            { waktu: "Menunggu", keterangan: "Paket sedang disiapkan di gudang penerbit." }
+                        ]
+                    };
+
+                    if (typeof dataTracking !== 'undefined') {
+                        dataTracking[randomDO] = dataBaru;
+                    }
+
+                    document.getElementById('outNoResi').innerText = randomDO;
+                    document.getElementById('outNama').innerText = nama;
+                    document.getElementById('hasilPemesanan').style.display = 'block';
+
+                    formPemesanan.reset();
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

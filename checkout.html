@@ -1,0 +1,40 @@
+<!-- checkout.html (atau chackout.html sesuai struktur folder) -->
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pemesanan</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="nav-menu">
+        <a href="dashboard.html">Kembali ke Dashboard</a>
+    </div>
+
+    <div class="container card">
+        <h2>Formulir Pemesanan Baru</h2>
+        <form onsubmit="event.preventDefault(); alert('Pesanan Berhasil Disimpan!'); this.reset();">
+            <h3>Informasi Pemesan</h3>
+            <input type="text" placeholder="Nama Pemesan" required>
+            <input type="text" placeholder="Alamat Pengiriman" required>
+            <input type="text" placeholder="No Handphone" required>
+
+            <h3>Data Pembayaran & Produk</h3>
+            <select style="width: 100%; padding: 10px; margin: 10px 0;">
+                <option value="">-- Pilih Buku --</option>
+                <option value="1">Pemrograman Web Dasar (Rp 75.000)</option>
+                <option value="2">Mastering C++ (Rp 90.000)</option>
+            </select>
+            <input type="number" placeholder="Jumlah Beli" required>
+            <select style="width: 100%; padding: 10px; margin: 10px 0;">
+                <option value="transfer">Transfer Bank</option>
+                <option value="ewallet">E-Wallet</option>
+            </select>
+            <button type="submit">Proses Pemesanan</button>
+        </form>
+    </div>
+</body>
+
+</html>
